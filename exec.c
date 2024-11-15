@@ -1,26 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int binary(int arr[], int key, int length)
+int sentinel(int arr[], int key, int length)
 {
-    int start = 0;
-    int end = length - 1;
+    int last = arr[length - 1];
+    arr[length - 1] = key;
+    int i = 0;
 
-    while (start <= end)
+    while (arr[i] != key)
     {
-        int mid = start + (end - start) / 2;
-        if (arr[mid] == key)
-        {
-            return mid;
-        }
-        else if (arr[mid] < key)
-        {
-            start = mid + 1;
-        }
-        else
-        {
-            end = mid - 1;
-        }
+        i++;
+    }
+
+    arr[length - 1] = last;
+    if (i < length - 1 || arr[length - 1] == key)
+    {
+        return i;
     }
     return -1;
 }
@@ -30,7 +25,7 @@ int main()
     int arr[] = {1, 11, 45, 67, 76, 111, 212, 5765, 12311};
     int key = 111;
     int length = sizeof(arr) / sizeof(arr[0]);
-    int result = binary(arr, key, length);
+    int result = sentinel(arr, key, length);
     if (result == -1)
     {
         printf("Element not found\n");

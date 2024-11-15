@@ -1,17 +1,22 @@
-arr = [1, 11, 45, 67, 76, 111, 212, 5765, 12311]
-key = 111
+def sentinelSearch(arr, n, key):
 
-start = 0
-end = len(arr) - 1
+    last = arr[n - 1]
+    arr[n - 1] = key
+    i = 0
 
-while start <= end:
-    mid = start + (end - start) // 2
-    if arr[mid] == key:
-        print(f"Element found at index {mid}")
-        break
-    elif arr[mid] < key:
-        start = mid + 1
+    while arr[i] != key:
+        i += 1
+
+    arr[n - 1] = last
+
+    if (i < n - 1) or (arr[n - 1] == key):
+        print(key, "is present at index", i)
     else:
-        end = mid - 1
-    if start > end:
-        print("Element not found")
+        print("Element Not found")
+
+
+arr = [10, 20, 180, 30, 60, 50, 110, 100, 70]
+n = len(arr)
+key = 180
+
+sentinelSearch(arr, n, key)
