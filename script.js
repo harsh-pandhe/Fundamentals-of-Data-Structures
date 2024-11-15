@@ -12,7 +12,7 @@ while (arr[i] != key) {
 arr[n - 1] = key;
 
 if ((i < n - 1) || arr[n - 1] == key) {
-    console.log("Element found at position: ", i);
+    console.log(key + " found at position: ", i);
 }
 else {
     console.log("Element not found");
