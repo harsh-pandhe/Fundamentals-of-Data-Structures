@@ -1,9 +1,17 @@
-arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-key = 6
+arr = [1, 11, 45, 67, 76, 111, 212, 5765, 12311]
+key = 111
 
-for i in range(len(arr)):
-    if arr[i] == key:
-        print("Key found at index", i)
+start = 0
+end = len(arr) - 1
+
+while start <= end:
+    mid = start + (end - start) // 2
+    if arr[mid] == key:
+        print(f"Element found at index {mid}")
         break
-    if i == len(arr) - 1:
-        print("Key not found")
+    elif arr[mid] < key:
+        start = mid + 1
+    else:
+        end = mid - 1
+    if start > end:
+        print("Element not found")

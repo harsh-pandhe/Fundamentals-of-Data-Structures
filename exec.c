@@ -1,13 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int linear(int arr[], int key, int length)
+int binary(int arr[], int key, int length)
 {
-    for (int i = 0; i < length; i++)
+    int start = 0;
+    int end = length - 1;
+
+    while (start <= end)
     {
-        if (arr[i] == key)
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == key)
         {
-            return i;
+            return mid;
+        }
+        else if (arr[mid] < key)
+        {
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
         }
     }
     return -1;
@@ -15,10 +27,10 @@ int linear(int arr[], int key, int length)
 
 int main()
 {
-    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int key = 6;
+    int arr[] = {1, 11, 45, 67, 76, 111, 212, 5765, 12311};
+    int key = 111;
     int length = sizeof(arr) / sizeof(arr[0]);
-    int result = linear(arr, key, length);
+    int result = binary(arr, key, length);
     if (result == -1)
     {
         printf("Element not found\n");
