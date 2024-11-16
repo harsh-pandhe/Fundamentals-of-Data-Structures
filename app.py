@@ -1,13 +1,14 @@
-def selectionSort(arr):
-    for i in range(len(arr)):
-        a = i
-        for j in range(i + 1, len(arr)):
-            if arr[a] > arr[j]:
-                a = j
-        arr[i], arr[a] = arr[a], arr[i]
+def insertionSort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
 
 
 if __name__ == "__main__":
     arr = [64, 34, 25, 12, 22, 11, 90]
-    selectionSort(arr)
+    insertionSort(arr)
     print("Sorted array is:", arr)
