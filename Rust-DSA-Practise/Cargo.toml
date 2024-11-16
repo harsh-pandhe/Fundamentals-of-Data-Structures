@@ -1,5 +1,5 @@
 [package]
-name = "Rust-DSA-Practise"
+name = "rust-dsa-practise"
 version = "0.1.0"
 edition = "2021"
 

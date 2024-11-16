@@ -1,29 +1,47 @@
-fn sentinel(arr: &[i32], key: i32) -> Option<usize> {
-    let mut arr = arr.to_vec();
-    let n: usize = arr.len();
-    let last = arr[n - 1];
-    let mut i = 0;
+fn fibonacci_search(arr: &[i32], target: i32) -> Option<usize> {
+    let mut a = 0;
+    let mut b = 1;
+    let mut c = b + a;
+    let n = arr.len();
 
-    while i < n && arr[i] != key {
-        i += 1;
+    while c < n {
+        a = b;
+        b = c;
+        c = b + a;
     }
 
-    arr[n - 1] = last;
+    let mut offset = 0;
 
-    if i < n - 1 || arr[n - 1] == key {
-        return Some(i);
+    while c > 1 {
+        let i = std::cmp::min(offset + a, n - 1);
+
+        if arr[i] == target {
+            return Some(i);
+        } else if arr[i] < target {
+            c = b;
+            b = a;
+            a = c - b;
+            offset = i;
+        } else {
+            c = a;
+            b -= a;
+            a = c - b;
+        }
     }
+
+    if arr[offset] == target {
+        return Some(offset);
+    }
+
     None
 }
 
 fn main() {
-    let arr = [1, 11, 45, 67, 76, 111, 212, 5765, 12311];
-    let key = 1111;
-    let result = sentinel(&arr, key);
+    let arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90];
+    let target = 85;
 
-    if result.is_some() {
-        println!("Element found at index: {}", result.unwrap());
-    } else {
-        println!("Element not found");
+    match fibonacci_search(&arr, target) {
+        Some(index) => println!("Element found at index: {}", index),
+        None => println!("Element not found"),
     }
 }
