@@ -1,45 +1,33 @@
-arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235]
+from math import sqrt
+
+arr = [1, 11, 45, 67, 76, 111, 212, 5765, 12311]
 n = len(arr)
-x = 235
+x = 5765
 
 
-def fibMonaccianSearch(arr, x, n):
-    fibMMm2 = 0
-    fibMMm1 = 1
-    fibM = fibMMm2 + fibMMm1
+def jump(arr, x, n):
+    step = sqrt(n)
+    prev = 0
 
-    while fibM < n:
-        fibMMm2 = fibMMm1
-        fibMMm1 = fibM
-        fibM = fibMMm2 + fibMMm1
+    while arr[int(min(step, n) - 1)] < x:
+        prev = step
+        step += sqrt(n)
+        if prev >= n:
+            return -1
 
-    offset = -1
+    while arr[int(prev)] < x:
+        prev += 1
+        if prev == min(step, n):
+            return -1
 
-    while fibM > 1:
-        i = min(offset + fibMMm2, n - 1)
-
-        if arr[i] < x:
-            fibM = fibMMm1
-            fibMMm1 = fibMMm2
-            fibMMm2 = fibM - fibMMm1
-            offset = i
-
-        elif arr[i] > x:
-            fibM = fibMMm2
-            fibMMm1 -= fibMMm2
-            fibMMm2 = fibM - fibMMm1
-
-        else:
-            return i
-
-    if fibMMm1 and arr[n - 1] == x:
-        return n - 1
-
+    if arr[int(prev)] == x:
+        return prev
     return -1
 
 
-ind = fibMonaccianSearch(arr, x, n)
-if ind >= 0:
-    print("Found at index:", ind)
+result = jump(arr, x, n)
+
+if result <= 0:
+    print("Not found")
 else:
-    print(x, "isn't present in the array")
+    print("Element found at:", int(result))

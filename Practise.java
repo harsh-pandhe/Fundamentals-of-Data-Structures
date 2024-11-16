@@ -1,39 +1,24 @@
 public class Practise {
-    public static int min(int x, int y) {
-        return (x <= y) ? x : y;
-    }
 
-    public static int fibo(int[] arr, int key, int n) {
-        int a = 0;
-        int b = 1;
-        int c = b + a;
-        while (c < n) {
-            b = a;
-            a = c;
-            c = b + a;
+    public static int jump(int[] arr, int x, int n) {
+        int step = (int) Math.floor(Math.sqrt(n));
+        int prev = 0;
+
+        for (int minStep = Math.min(step, n) - 1; arr[minStep] < x; minStep = Math.min(step, n) - 1) {
+            prev = step;
+            step += (int) Math.floor(Math.sqrt(n));
+            if (prev >= n)
+                return -1;
         }
 
-        int offset = -1;
-
-        while (c > 1) {
-            int i = min(offset + b, n - 1);
-
-            if (arr[i] < key) {
-                c = a;
-                a = b;
-                b = c - a;
-                offset = i;
-            } else if (arr[i] > key) {
-                c = b;
-                a -= b;
-                b = c - a;
-            } else {
-                return i;
-            }
+        while (arr[prev] < x) {
+            prev++;
+            if (prev == Math.min(step, n))
+                return -1;
         }
 
-        if (a == 1 && (arr[n - 1] == key)) {
-            return n - 1;
+        if (arr[prev] == x) {
+            return prev;
         }
 
         return -1;
@@ -43,7 +28,7 @@ public class Practise {
         int[] arr = { 1, 11, 45, 67, 76, 111, 212, 5765, 12311 };
         int key = 212;
         int n = arr.length;
-        int result = fibo(arr, key, n);
+        int result = jump(arr, key, n);
         if (result <= 0) {
             System.out.println("Element not found");
         } else {

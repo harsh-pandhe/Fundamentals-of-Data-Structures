@@ -1,50 +1,33 @@
 #include <iostream>
-#include <cmath>
+#include<cmath>
 using namespace std;
 
-int fibo(int arr[], int key, int n)
+int jump(int arr[], int key, int n)
 {
-    int a = 0;
-    int b = 1;
-    int c = b + a;
-
-    while (c < n)
+    int step = sqrt(n);
+    int prev = 0;
+    while (arr[min(step, n) - 1] < key)
     {
-        b = a;
-        a = c;
-        c = b + a;
+        prev = step;
+        step += sqrt(n);
+        if (prev >= n)
+        {
+            return -1;
+        }
     }
 
-    int offset = -1;
-
-    while (c > 1)
+    while (arr[prev] < key)
     {
-        int i = fmin(offset + b, n - 1);
-
-        if (arr[i] < key)
+        prev++;
+        if (prev == min(step, n))
         {
-            c = a;
-            a = b;
-            b = c - a;
-            offset = i;
+            return -1;
         }
+    }
 
-        else if (arr[i] > key)
-        {
-            c = b;
-            a -= b;
-            b = c - a;
-        }
-
-        else
-        {
-            return i;
-        }
-
-        if (arr[n - 1] == key && a)
-        {
-            return i;
-        }
+    if (arr[prev] == key)
+    {
+        return prev;
     }
 
     return -1;
@@ -55,7 +38,7 @@ int main()
     int arr[] = {1, 11, 45, 67, 76, 111, 212, 5765, 12311};
     int key = 212;
     int length = sizeof(arr) / sizeof(arr[0]);
-    int result = fibo(arr, key, length);
+    int result = jump(arr, key, length);
     if (result <= 0)
     {
         cout << "Element not found" << endl;

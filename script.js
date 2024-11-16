@@ -2,47 +2,33 @@ arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235]
 x = 235
 n = arr.length;
 
-function fibo(arr, x, n) {
-    a = 0
-    b = 1
-    c = b + a
+function jump(arr, x, n) {
+    step = Math.sqrt(n);
+    prev = 0;
 
-    while (c < n) {
-        b = a
-        a = c
-        c = b + a
-    }
-
-    offset = -1
-
-    while (c > 1) {
-        i = Math.min(offset + b, n - 1)
-
-        if (arr[i] < x) {
-            c = a
-            a = b
-            b = c - a
-            offset = i
-        }
-        else if (arr[i] > x) {
-            c = b
-            a -= b
-            b = c - a
-        }
-        else {
-            return i;
+    while (arr[Math.min(step, n) - 1] < x) {
+        prev = step;
+        step += Math.sqrt(n);
+        if (prev >= n) {
+            return -1;
         }
     }
 
-    if (a && arr[n - 1] == x) {
-        return n - 1;
+    while (arr[prev] < x) {
+        prev++;
+        if (prev == Math.min(step, n)) {
+            return -1;
+        }
+    }
+
+    if (arr[prev] == x) {
+        return prev;
     }
     return -1;
-
 }
-ind = fibo(arr, x, n)
-if (ind >= 0) {
-    console.log("Found at index:", ind)
+
+if (jump(arr, x, n) == -1) {
+    console.log("Element not found");
 } else {
-    console.log(x, "isn't present in the array")
+    console.log("Element found at index " + jump(arr, x, n));
 }

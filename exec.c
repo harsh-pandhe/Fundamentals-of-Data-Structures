@@ -1,65 +1,45 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
-int fibo(int arr[], int key, int n)
+int min(int a, int b)
 {
-    int a = 0;
-    int b = 1;
-    int c = b + a;
+    if (b > a)
+        return a;
+    else
+        return b;
+}
+int jump(int arr[], int x, int n)
+{
+    int step = sqrt(n);
 
-    while (c < n)
+    int prev = 0;
+    while (arr[min(step, n) - 1] < x)
     {
-        b = a;
-        a = c;
-        c = b + a;
+        prev = step;
+        step += sqrt(n);
+        if (prev >= n)
+            return -1;
     }
 
-    int offset = -1;
-
-    while (c > 1)
+    while (arr[prev] < x)
     {
-        int i = fmin(offset + b, n - 1);
-
-        if (arr[i] < key)
-        {
-            c = a;
-            a = b;
-            b = c - a;
-            offset = i;
-        }
-
-        else if (arr[i] > key)
-        {
-            c = b;
-            a -= b;
-            b = c - a;
-        }
-        else
-        {
-            return i;
-        }
+        prev++;
+        if (prev == min(step, n))
+            return -1;
     }
-    if (arr[n - 1] == key && a)
-    {
-        return n - 1;
-    }
+    if (arr[prev] == x)
+        return prev;
 
     return -1;
 }
-
 int main()
 {
-    int arr[] = {1, 11, 45, 67, 76, 111, 212, 5765, 12311};
-    int key = 212;
-    int length = sizeof(arr) / sizeof(arr[0]);
-    int result = fibo(arr, key, length);
-    if (result <= 0)
-    {
-        printf("Element not found\n");
-    }
+    int arr[] = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610};
+    int x = 55;
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int index = jump(arr, x, n);
+    if (index >= 0)
+        printf("Element is at %d index", index);
     else
-    {
-        printf("Element found at Index: %d\n", result);
-    }
+        printf("Element does not exist in the array");
     return 0;
 }
