@@ -1,22 +1,19 @@
-arr = [42, 1, 24, 56, 343, 12, 15, 98]
+arr = [421, 1, 24, 56, 343, 12, 15, 98]
 n = arr.length
 
-function bubble_sort(arr, n) {
+function selectionSort(arr, n) {
     for (i = 0; i < n - 1; i++) {
-        swapped = false
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                temp = arr[j];
-                arr[j] = arr[j + 1]
-                arr[j + 1] = temp
-                swapped = true
+        a = i;
+        for (j = i + 1; j < n; j++) {
+            if (arr[a] > arr[j]) {
+                a = j;
             }
         }
-        if (swapped == false) {
-            break
-        }
+        temp = arr[a];
+        arr[a] = arr[i];
+        arr[i] = temp;
     }
 }
 
-bubble_sort(arr, n)
+selectionSort(arr, n)
 console.log(arr)

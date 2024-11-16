@@ -1,21 +1,13 @@
-fn bubble_sort(arr: &mut [i32], n: usize) {
-    let i = 0;
-    let j: i32 = 0;
-    let mut temp = 0;
-    let mut swapped;
-
+fn selection_sort(arr: &mut [i32], n: usize) {
     for i in 0..n - 1 {
-        swapped = false;
-        for j in 0..n - i - 1 {
-            if arr[j] > arr[j + 1] {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                swapped = true;
+        let mut a = i;
+        for j in i + 1..n {
+            if arr[a] > arr[j] {
+                a = j;
             }
         }
-        if swapped == false {
-            break;
+        if a != i {
+            arr.swap(a, i);
         }
     }
 }
@@ -23,6 +15,6 @@ fn bubble_sort(arr: &mut [i32], n: usize) {
 fn main() {
     let mut arr = [54, 26, 93, 17, 77, 31, 44, 55, 20];
     let n = arr.len();
-    bubble_sort(&mut arr, n);
+    selection_sort(&mut arr, n);
     println!("Sorted array: {:?}", arr);
 }

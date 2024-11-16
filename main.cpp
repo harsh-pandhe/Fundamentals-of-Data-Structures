@@ -1,28 +1,22 @@
 #include <iostream>
 using namespace std;
 
-int bubble_sort(int arr[], int n)
+int selectionSort(int arr[], int n)
 {
-    bool swapped;
-    int i, j, temp;
-
+    int i, j, temp, a;
     for (i = 0; i < n - 1; i++)
     {
-        swapped = false;
-        for (j = 0; j < n - i - 1; j++)
+        a = i;
+        for (j = i + 1; j < n; j++)
         {
-            if (arr[j] > arr[j + 1])
+            if (arr[j] < arr[a])
             {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                swapped = true;
+                a = j;
             }
         }
-        if (swapped == false)
-        {
-            break;
-        }
+        temp = arr[a];
+        arr[a] = arr[i];
+        arr[i] = temp;
     }
     return 0;
 }
@@ -31,7 +25,7 @@ int main()
 {
     int arr[] = {54, 12, 34, 56, 78, 90, 23, 45, 67, 89};
     int n = sizeof(arr) / sizeof(arr[0]);
-    bubble_sort(arr, n);
+    selectionSort(arr, n);
     cout << "Sorted array: \n";
     for (int i = 0; i < n; i++)
     {
