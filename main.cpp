@@ -1,50 +1,40 @@
 #include <iostream>
-#include<cmath>
 using namespace std;
 
-int jump(int arr[], int key, int n)
+int bubble_sort(int arr[], int n)
 {
-    int step = sqrt(n);
-    int prev = 0;
-    while (arr[min(step, n) - 1] < key)
+    bool swapped;
+    int i, j, temp;
+
+    for (i = 0; i < n - 1; i++)
     {
-        prev = step;
-        step += sqrt(n);
-        if (prev >= n)
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++)
         {
-            return -1;
+            if (arr[j] > arr[j + 1])
+            {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        if (swapped == false)
+        {
+            break;
         }
     }
-
-    while (arr[prev] < key)
-    {
-        prev++;
-        if (prev == min(step, n))
-        {
-            return -1;
-        }
-    }
-
-    if (arr[prev] == key)
-    {
-        return prev;
-    }
-
-    return -1;
+    return 0;
 }
 
 int main()
 {
-    int arr[] = {1, 11, 45, 67, 76, 111, 212, 5765, 12311};
-    int key = 212;
-    int length = sizeof(arr) / sizeof(arr[0]);
-    int result = jump(arr, key, length);
-    if (result <= 0)
+    int arr[] = {54, 12, 34, 56, 78, 90, 23, 45, 67, 89};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    bubble_sort(arr, n);
+    cout << "Sorted array: \n";
+    for (int i = 0; i < n; i++)
     {
-        cout << "Element not found" << endl;
-    }
-    else
-    {
-        cout << "Element found at Index: " << result << endl;
+        cout << arr[i] << " ";
     }
 }

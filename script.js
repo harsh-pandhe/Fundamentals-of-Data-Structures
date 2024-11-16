@@ -1,34 +1,22 @@
-arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235]
-x = 235
-n = arr.length;
+arr = [42, 1, 24, 56, 343, 12, 15, 98]
+n = arr.length
 
-function jump(arr, x, n) {
-    step = Math.sqrt(n);
-    prev = 0;
-
-    while (arr[Math.min(step, n) - 1] < x) {
-        prev = step;
-        step += Math.sqrt(n);
-        if (prev >= n) {
-            return -1;
+function bubble_sort(arr, n) {
+    for (i = 0; i < n - 1; i++) {
+        swapped = false
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+                swapped = true
+            }
+        }
+        if (swapped == false) {
+            break
         }
     }
-
-    while (arr[prev] < x) {
-        prev++;
-        if (prev == Math.min(step, n)) {
-            return -1;
-        }
-    }
-
-    if (arr[prev] == x) {
-        return prev;
-    }
-    return -1;
 }
 
-if (jump(arr, x, n) == -1) {
-    console.log("Element not found");
-} else {
-    console.log("Element found at index " + jump(arr, x, n));
-}
+bubble_sort(arr, n)
+console.log(arr)

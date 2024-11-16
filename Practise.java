@@ -1,39 +1,32 @@
 public class Practise {
+    public static int bubbleSort(int[] arr, int n) {
+        int i, j, temp;
+        boolean swapped;
 
-    public static int jump(int[] arr, int x, int n) {
-        int step = (int) Math.floor(Math.sqrt(n));
-        int prev = 0;
+        for (i = 0; i < n - 1; i++) {
+            swapped = false;
 
-        for (int minStep = Math.min(step, n) - 1; arr[minStep] < x; minStep = Math.min(step, n) - 1) {
-            prev = step;
-            step += (int) Math.floor(Math.sqrt(n));
-            if (prev >= n)
-                return -1;
+            for (j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (swapped == false) {
+                break;
+            }
         }
-
-        while (arr[prev] < x) {
-            prev++;
-            if (prev == Math.min(step, n))
-                return -1;
-        }
-
-        if (arr[prev] == x) {
-            return prev;
-        }
-
-        return -1;
+        return 0;
     }
 
     public static void main(String args[]) {
-        int[] arr = { 1, 11, 45, 67, 76, 111, 212, 5765, 12311 };
-        int key = 212;
+        int[] arr = { 54, 21, 56, 333, 78, 98, 454, 23 };
         int n = arr.length;
-        int result = jump(arr, key, n);
-        if (result <= 0) {
-            System.out.println("Element not found");
-        } else {
-            System.out.println("Element found at index: " + result);
+        bubbleSort(arr, n);
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
         }
-
     }
 }

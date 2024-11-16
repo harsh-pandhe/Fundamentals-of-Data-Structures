@@ -1,34 +1,28 @@
-fn jump_search(arr: &[i32], target: i32) -> Option<usize> {
-    let mut step = f32::sqrt(arr.len() as f32) as usize;
-    let mut prev = 0;
+fn bubble_sort(arr: &mut [i32], n: usize) {
+    let i = 0;
+    let j: i32 = 0;
+    let mut temp = 0;
+    let mut swapped;
 
-    while arr[std::cmp::min(step, arr.len()) - 1] < target {
-        prev = step;
-        step += f32::sqrt(arr.len() as f32) as usize;
-        if prev >= arr.len() {
-            return None;
+    for i in 0..n - 1 {
+        swapped = false;
+        for j in 0..n - i - 1 {
+            if arr[j] > arr[j + 1] {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        if swapped == false {
+            break;
         }
     }
-
-    while arr[prev] < target {
-        prev += 1;
-        if prev == std::cmp::min(step, arr.len()) {
-            return None;
-        }
-    }
-
-    if arr[prev] == target {
-        return Some(prev);
-    }
-
-    None
 }
-fn main() {
-    let arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90];
-    let target = 85;
 
-    match jump_search(&arr, target) {
-        Some(index) => println!("Element found at index: {}", index),
-        None => println!("Element not found"),
-    }
+fn main() {
+    let mut arr = [54, 26, 93, 17, 77, 31, 44, 55, 20];
+    let n = arr.len();
+    bubble_sort(&mut arr, n);
+    println!("Sorted array: {:?}", arr);
 }

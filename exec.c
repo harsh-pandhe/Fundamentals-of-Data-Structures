@@ -1,45 +1,40 @@
 #include <stdio.h>
-#include <math.h>
-int min(int a, int b)
+#include <stdbool.h>
+#include <stdlib.h>
+
+int bubble_sort(int arr[], int n)
 {
-    if (b > a)
-        return a;
-    else
-        return b;
-}
-int jump(int arr[], int x, int n)
-{
-    int step = sqrt(n);
+    bool swapped;
+    int i, j, temp;
 
-    int prev = 0;
-    while (arr[min(step, n) - 1] < x)
+    for (i = 0; i < n - 1; i++)
     {
-        prev = step;
-        step += sqrt(n);
-        if (prev >= n)
-            return -1;
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        if (swapped == false)
+        {
+            break;
+        }
     }
-
-    while (arr[prev] < x)
-    {
-        prev++;
-        if (prev == min(step, n))
-            return -1;
-    }
-    if (arr[prev] == x)
-        return prev;
-
-    return -1;
 }
+
 int main()
 {
-    int arr[] = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610};
-    int x = 55;
+    int arr[] = {54, 12, 34, 56, 78, 90, 23, 45, 67, 89};
     int n = sizeof(arr) / sizeof(arr[0]);
-    int index = jump(arr, x, n);
-    if (index >= 0)
-        printf("Element is at %d index", index);
-    else
-        printf("Element does not exist in the array");
-    return 0;
+    bubble_sort(arr, n);
+    printf("Sorted array: \n");
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
 }

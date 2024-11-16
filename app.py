@@ -1,33 +1,17 @@
-from math import sqrt
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
 
-arr = [1, 11, 45, 67, 76, 111, 212, 5765, 12311]
-n = len(arr)
-x = 5765
-
-
-def jump(arr, x, n):
-    step = sqrt(n)
-    prev = 0
-
-    while arr[int(min(step, n) - 1)] < x:
-        prev = step
-        step += sqrt(n)
-        if prev >= n:
-            return -1
-
-    while arr[int(prev)] < x:
-        prev += 1
-        if prev == min(step, n):
-            return -1
-
-    if arr[int(prev)] == x:
-        return prev
-    return -1
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if swapped == False:
+            break
 
 
-result = jump(arr, x, n)
-
-if result <= 0:
-    print("Not found")
-else:
-    print("Element found at:", int(result))
+if __name__ == "__main__":
+    arr = [64, 34, 25, 12, 22, 11, 90]
+    bubble_sort(arr)
+    print("Sorted array is:", arr)
