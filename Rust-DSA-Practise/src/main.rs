@@ -1,18 +1,33 @@
-fn insertion_sort(arr: &mut [i32]) {
-    let n = arr.len();
-    for i in 1..n {
-        let key = arr[i];
-        let mut j = i as isize - 1;
-        while j >= 0 && arr[j as usize] > key {
-            arr[(j + 1) as usize] = arr[j as usize];
-            j = j - 1;
+fn partition(arr: &mut [i32], low: usize, high: usize) -> usize {
+    let pivot = arr[high];
+    let mut i = low as isize - 1;
+    for j in low..high {
+        if arr[j as usize] < pivot {
+            i += 1;
+            let temp = arr[i as usize];
+            arr[i as usize] = arr[j as usize];
+            arr[j as usize] = temp;
         }
-        arr[(j + 1) as usize] = key;
+    }
+    let temp = arr[(i + 1) as usize];
+    arr[(i + 1) as usize] = arr[high as usize];
+    arr[high as usize] = temp;
+    (i + 1) as usize
+}
+
+fn quick_sort(arr: &mut [i32], low: usize, high: usize) {
+    if low < high {
+        let pi = partition(arr, low, high);
+        if pi > 0 {
+            quick_sort(arr, low, pi - 1);
+        }
+        quick_sort(arr, pi + 1, high);
     }
 }
 
 fn main() {
     let mut arr = [54, 26, 93, 17, 77, 31, 44, 55, 20];
-    insertion_sort(&mut arr);
+    let high = arr.len() - 1;
+    quick_sort(&mut arr, 0, high);
     println!("Sorted array: {:?}", arr);
 }
