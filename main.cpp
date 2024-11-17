@@ -1,32 +1,49 @@
 #include <iostream>
 using namespace std;
-
-int shellSort(int arr[], int n)
+int getMax(int arr[], int n)
 {
-    for (int gap = n / 2; gap > 0; gap /= 2)
+    int mx = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] > mx)
+            mx = arr[i];
+    return mx;
+}
+void countSort(int arr[], int n, int exp)
+{
+
+    int output[n];
+    int i, count[10] = {0};
+
+    for (i = 0; i < n; i++)
+        count[(arr[i] / exp) % 10]++;
+
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+
+    for (i = n - 1; i >= 0; i--)
     {
-        for (int i = gap; i < n; i += 1)
-        {
-            int temp = arr[i];
-            int j;
-            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
-            {
-                arr[j] = arr[j - gap];
-            }
-            arr[j] = temp;
-        }
+        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+        count[(arr[i] / exp) % 10]--;
     }
-    return 0;
+
+    for (i = 0; i < n; i++)
+        arr[i] = output[i];
+}
+
+void radixsort(int arr[], int n)
+{
+    int m = getMax(arr, n);
+    for (int exp = 1; m / exp > 0; exp *= 10)
+        countSort(arr, n, exp);
 }
 
 int main()
 {
-    int arr[] = {54, 12, 34, 56, 78, 90, 23, 45, 67, 89};
+    int arr[] = {170, 45, 75, 90, 802, 24, 2, 66};
     int n = sizeof(arr) / sizeof(arr[0]);
-    shellSort(arr, n);
-    cout << "Sorted array: \n";
+
+    radixsort(arr, n);
     for (int i = 0; i < n; i++)
-    {
         cout << arr[i] << " ";
-    }
+    return 0;
 }
