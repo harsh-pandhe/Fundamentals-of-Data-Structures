@@ -1,56 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getMax(int arr[], int n)
+void countSort(int inputArray[], int N)
 {
-    int max = arr[0];
-    for (int i = 1; i < n; i++)
-        if (arr[i] > max)
-            max = arr[i];
-    return max;
-}
+    int M = 0;
+    for (int i = 0; i < N; i++)
+        if (inputArray[i] > M)
+            M = inputArray[i];
 
-void countSort(int arr[], int n, int exp)
-{
-    int output[n];
-    int i, count[10] = {0};
+    int *countArray = (int *)calloc(M + 1, sizeof(int));
 
-    for (i = 0; i < n; i++)
-        count[(arr[i] / exp) % 10]++;
+    for (int i = 0; i < N; i++)
+        countArray[inputArray[i]]++;
 
-    for (i = 1; i < 10; i++)
-        count[i] += count[i - 1];
+    for (int i = 1; i <= M; i++)
+        countArray[i] += countArray[i - 1];
 
-    for (i = n - 1; i >= 0; i--)
+    int *outputArray = (int *)malloc(N * sizeof(int));
+    for (int i = N - 1; i >= 0; i--)
     {
-        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
-        count[(arr[i] / exp) % 10]--;
+        outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
+        countArray[inputArray[i]]--;
     }
 
-    for (i = 0; i < n; i++)
-        arr[i] = output[i];
-}
+    for (int i = 0; i < N; i++)
+        inputArray[i] = outputArray[i];
 
-void radixSort(int arr[], int n)
-{
-    int m = getMax(arr, n);
-
-    for (int exp = 1; m / exp > 0; exp *= 10)
-        countSort(arr, n, exp);
-}
-
-void printArray(int arr[], int n)
-{
-    for (int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
+    free(countArray);
+    free(outputArray);
 }
 
 int main()
 {
-    int arr[] = {170, 45, 75, 90, 802, 24, 2, 66};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    radixSort(arr, n);
-    printArray(arr, n);
+    int inputArray[] = {4, 3, 12, 1, 5, 5, 3, 9};
+    int N = sizeof(inputArray) / sizeof(inputArray[0]);
+
+    countSort(inputArray, N);
+
+    for (int i = 0; i < N; i++)
+        printf("%d ", inputArray[i]);
+
     return 0;
 }

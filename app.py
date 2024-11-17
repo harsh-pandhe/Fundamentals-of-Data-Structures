@@ -1,34 +1,25 @@
-def counting_sort(arr, exp):
-    n = len(arr)
-    output = [0] * n
-    count = [0] * 10
+def count_sort(input_array):
+    N = len(input_array)
+    M = max(input_array)
+    count_array = [0] * (M + 1)
 
-    for i in range(n):
-        index = arr[i] // exp
-        count[index % 10] += 1
+    for num in input_array:
+        count_array[num] += 1
 
-    for i in range(1, 10):
-        count[i] += count[i - 1]
+    for i in range(1, M + 1):
+        count_array[i] += count_array[i - 1]
 
-    i = n - 1
-    while i >= 0:
-        index = arr[i] // exp
-        output[count[index % 10] - 1] = arr[i]
-        count[index % 10] -= 1
-        i -= 1
+    output_array = [0] * N
 
-    for i in range(n):
-        arr[i] = output[i]
+    for num in reversed(input_array):
+        output_array[count_array[num] - 1] = num
+        count_array[num] -= 1
+
+    return output_array
 
 
-def radix_sort(arr):
-    max1 = max(arr)
-    exp = 1
-    while max1 // exp > 0:
-        counting_sort(arr, exp)
-        exp *= 10
+input_array = [4, 3, 12, 1, 5, 5, 3, 9]
+output_array = count_sort(input_array)
 
-
-arr = [170, 45, 75, 90, 802, 24, 2, 66]
-radix_sort(arr)
-print(arr)
+for num in output_array:
+    print(num, end=" ")

@@ -1,49 +1,41 @@
 #include <iostream>
+#include <vector>
 using namespace std;
-int getMax(int arr[], int n)
+
+vector<int> countSort(vector<int> &inputArray)
 {
-    int mx = arr[0];
-    for (int i = 1; i < n; i++)
-        if (arr[i] > mx)
-            mx = arr[i];
-    return mx;
-}
-void countSort(int arr[], int n, int exp)
-{
+    int N = inputArray.size();
+    int M = 0;
 
-    int output[n];
-    int i, count[10] = {0};
+    for (int i = 0; i < N; i++)
+        M = max(M, inputArray[i]);
 
-    for (i = 0; i < n; i++)
-        count[(arr[i] / exp) % 10]++;
+    vector<int> countArray(M + 1, 0);
 
-    for (i = 1; i < 10; i++)
-        count[i] += count[i - 1];
+    for (int i = 0; i < N; i++)
+        countArray[inputArray[i]]++;
 
-    for (i = n - 1; i >= 0; i--)
+    for (int i = 1; i <= M; i++)
+        countArray[i] += countArray[i - 1];
+
+    vector<int> outputArray(N);
+
+    for (int i = N - 1; i >= 0; i--)
     {
-        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
-        count[(arr[i] / exp) % 10]--;
+        outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
+        countArray[inputArray[i]]--;
     }
 
-    for (i = 0; i < n; i++)
-        arr[i] = output[i];
-}
-
-void radixsort(int arr[], int n)
-{
-    int m = getMax(arr, n);
-    for (int exp = 1; m / exp > 0; exp *= 10)
-        countSort(arr, n, exp);
+    return outputArray;
 }
 
 int main()
 {
-    int arr[] = {170, 45, 75, 90, 802, 24, 2, 66};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    vector<int> inputArray = {4, 3, 12, 1, 5, 5, 3, 9};
+    vector<int> outputArray = countSort(inputArray);
 
-    radixsort(arr, n);
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
+    for (int i = 0; i < inputArray.size(); i++)
+        cout << outputArray[i] << " ";
+
     return 0;
 }
