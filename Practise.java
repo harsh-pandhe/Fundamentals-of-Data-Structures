@@ -1,35 +1,28 @@
-import java.util.Arrays;
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 
 public class Practise {
 
-    public static int[] countSort(int[] inputArray) {
-        int N = inputArray.length;
-        int M = Arrays.stream(inputArray).max().getAsInt();
-        int[] countArray = new int[M + 1];
-
-        for (int i = 0; i < N; i++) {
-            countArray[inputArray[i]]++;
+    public static void printlist(Node n) {
+        while (n != null) {
+            System.out.print(n.data + " ");
+            n = n.next;
         }
-
-        for (int i = 1; i <= M; i++) {
-            countArray[i] += countArray[i - 1];
-        }
-
-        int[] outputArray = new int[N];
-        for (int i = N - 1; i >= 0; i--) {
-            outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
-            countArray[inputArray[i]]--;
-        }
-
-        return outputArray;
     }
 
     public static void main(String[] args) {
-        int[] inputArray = { 4, 3, 12, 1, 5, 5, 3, 9 };
-        int[] outputArray = countSort(inputArray);
-
-        for (int i = 0; i < inputArray.length; i++) {
-            System.out.print(outputArray[i] + " ");
-        }
+        Node head = new Node(1);
+        Node second = new Node(2);
+        Node third = new Node(3);
+        head.next = second;
+        second.next = third;
+        printlist(head);
     }
 }

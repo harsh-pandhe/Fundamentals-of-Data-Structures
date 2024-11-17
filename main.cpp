@@ -1,41 +1,28 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-
-vector<int> countSort(vector<int> &inputArray)
+struct Node
 {
-    int N = inputArray.size();
-    int M = 0;
-
-    for (int i = 0; i < N; i++)
-        M = max(M, inputArray[i]);
-
-    vector<int> countArray(M + 1, 0);
-
-    for (int i = 0; i < N; i++)
-        countArray[inputArray[i]]++;
-
-    for (int i = 1; i <= M; i++)
-        countArray[i] += countArray[i - 1];
-
-    vector<int> outputArray(N);
-
-    for (int i = N - 1; i >= 0; i--)
+    int data;
+    Node *next;
+    Node(int data)
     {
-        outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
-        countArray[inputArray[i]]--;
+        this->data = data;
+        this->next = nullptr;
     }
-
-    return outputArray;
-}
+};
 
 int main()
 {
-    vector<int> inputArray = {4, 3, 12, 1, 5, 5, 3, 9};
-    vector<int> outputArray = countSort(inputArray);
+    Node *head = nullptr;
+    Node *second = nullptr;
+    Node *third = nullptr;
 
-    for (int i = 0; i < inputArray.size(); i++)
-        cout << outputArray[i] << " ";
+    head = new Node(1);
+    second = new Node(2);
+    third = new Node(3);
 
-    return 0;
+    head->next = second;
+    second->next = third;
+
+    cout << head->data << " -> " << head->next->data << " -> " << head->next->next->data << endl;
 }

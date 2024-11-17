@@ -1,38 +1,34 @@
-fn count_sort(input_array: &mut [i32]) -> Vec<i32> {
-    let n = input_array.len();
-    let mut m = 0;
+struct Node {
+    data: i32,
+    next: Option<Box<Node>>,
+}
 
-    for &num in input_array.iter() {
-        if num > m {
-            m = num;
-        }
+impl Node {
+    fn new(data: i32) -> Node {
+        Node { data, next: None }
     }
+}
 
-    let mut count_array = vec![0; (m + 1) as usize];
-
-    for &num in input_array.iter() {
-        count_array[num as usize] += 1;
+fn print_list(mut node: &Option<Box<Node>>) {
+    while let Some(n) = node {
+        print!("{} ", n.data);
+        node = &n.next;
     }
-
-    for i in 1..=m as usize {
-        count_array[i] += count_array[i - 1];
-    }
-
-    let mut output_array = vec![0; n];
-
-    for &num in input_array.iter().rev() {
-        output_array[count_array[num as usize] as usize - 1] = num;
-        count_array[num as usize] -= 1;
-    }
-
-    output_array
 }
 
 fn main() {
-    let mut input_array = vec![4, 3, 12, 1, 5, 5, 3, 9];
-    let output_array = count_sort(&mut input_array);
+    let third = Node {
+        data: 3,
+        next: None,
+    };
+    let second = Node {
+        data: 2,
+        next: Some(Box::new(third)),
+    };
+    let head = Node {
+        data: 1,
+        next: Some(Box::new(second)),
+    };
 
-    for num in output_array.iter() {
-        print!("{} ", num);
-    }
+    print_list(&Some(Box::new(head)));
 }

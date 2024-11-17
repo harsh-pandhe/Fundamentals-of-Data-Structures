@@ -1,27 +1,18 @@
-function countSort(inputArray) {
-    let N = inputArray.length;
-    let M = Math.max(...inputArray);
-    let countArray = new Array(M + 1).fill(0);
-
-    for (let i = 0; i < N; i++) {
-        countArray[inputArray[i]]++;
+class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
     }
-
-    for (let i = 1; i <= M; i++) {
-        countArray[i] += countArray[i - 1];
-    }
-
-    let outputArray = new Array(N);
-
-    for (let i = N - 1; i >= 0; i--) {
-        outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
-        countArray[inputArray[i]]--;
-    }
-
-    return outputArray;
 }
 
-let inputArray = [4, 3, 12, 1, 5, 5, 3, 9];
-let outputArray = countSort(inputArray);
+let head = null;
+let second = null;
+let third = null;
 
-console.log(outputArray.join(" "));
+head = new Node(1);
+second = new Node(2);
+third = new Node(3);
+
+head.next = second;
+second.next = third;
+console.log(head)

@@ -1,44 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void countSort(int inputArray[], int N)
+struct Node
 {
-    int M = 0;
-    for (int i = 0; i < N; i++)
-        if (inputArray[i] > M)
-            M = inputArray[i];
+    int data;
+    struct Node *next;
+};
 
-    int *countArray = (int *)calloc(M + 1, sizeof(int));
-
-    for (int i = 0; i < N; i++)
-        countArray[inputArray[i]]++;
-
-    for (int i = 1; i <= M; i++)
-        countArray[i] += countArray[i - 1];
-
-    int *outputArray = (int *)malloc(N * sizeof(int));
-    for (int i = N - 1; i >= 0; i--)
-    {
-        outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
-        countArray[inputArray[i]]--;
-    }
-
-    for (int i = 0; i < N; i++)
-        inputArray[i] = outputArray[i];
-
-    free(countArray);
-    free(outputArray);
+struct Node *newNode(int data)
+{
+    struct Node *node = (struct Node *)malloc(sizeof(struct Node));
+    node->data = data;
+    node->next = NULL;
+    return node;
 }
 
 int main()
 {
-    int inputArray[] = {4, 3, 12, 1, 5, 5, 3, 9};
-    int N = sizeof(inputArray) / sizeof(inputArray[0]);
+    struct Node *head = NULL;
+    struct Node *second = NULL;
+    struct Node *third = NULL;
 
-    countSort(inputArray, N);
+    head = newNode(1);
+    second = newNode(2);
+    third = newNode(3);
 
-    for (int i = 0; i < N; i++)
-        printf("%d ", inputArray[i]);
+    head->next = second;
+    second->next = third;
 
-    return 0;
+    printf("%d -> %d -> %d\n", head->data, head->next->data, head->next->next->data);
 }
