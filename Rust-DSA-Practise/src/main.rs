@@ -1,51 +1,37 @@
-use std::rc::Rc;
-use std::cell::RefCell;
-
-#[derive(Debug)]
+#[derive(Clone)]
 struct Node {
     data: i32,
-    next: Option<Rc<RefCell<Node>>>,
-    prev: Option<Rc<RefCell<Node>>>,
+    next: Option<Box<Node>>,
 }
 
 impl Node {
-    fn new(data: i32) -> Rc<RefCell<Node>> {
-        Rc::new(RefCell::new(Node {
-            data,
-            next: None,
-            prev: None,
-        }))
+    fn new(data: i32) -> Self {
+        Node { data, next: None }
     }
 }
 
-fn forward_traversal(head: Option<Rc<RefCell<Node>>>) {
-    let mut temp = head;
-    while let Some(current) = temp {
-        print!("{} ", current.borrow().data);
-        temp = current.borrow().next.clone();
+fn print_list(last: &Option<Box<Node>>) {
+    if let Some(last_node) = last {
+        let mut head = Some(last_node.clone());
+        while let Some(node) = head {
+            print!("{} ", node.data);
+            head = node.next;
+            if head.is_none() || std::ptr::eq(&*head.as_ref().unwrap(), &*last_node) {
+                break;
+            }
+        }
+        println!();
     }
-    println!();
-}
-
-fn back_traversal(tail: Option<Rc<RefCell<Node>>>) {
-    let mut temp = tail;
-    while let Some(current) = temp {
-        print!("{} ", current.borrow().data);
-        temp = current.borrow().prev.clone();
-    }
-    println!();
 }
 
 fn main() {
-    let head = Node::new(1);
-    let second = Node::new(2);
-    let third = Node::new(3);
+    let mut head = Box::new(Node::new(1));
+    let second = Box::new(Node::new(2));
+    let third = Box::new(Node::new(3));
 
-    head.borrow_mut().next = Some(second.clone());
-    second.borrow_mut().prev = Some(head.clone());
-    second.borrow_mut().next = Some(third.clone());
-    third.borrow_mut().prev = Some(second.clone());
+    head.next = Some(second);
+    head.next.as_mut().unwrap().next = Some(third);
+    head.next.as_mut().unwrap().next.as_mut().unwrap().next = Some(head.clone());
 
-    forward_traversal(Some(head.clone()));
-    back_traversal(Some(third.clone()));
+    print_list(&head.next.as_ref().unwrap().next.as_ref().unwrap().next);
 }

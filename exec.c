@@ -4,7 +4,6 @@
 struct Node
 {
     int data;
-    struct Node *prev;
     struct Node *next;
 };
 
@@ -12,29 +11,21 @@ struct Node *newNode(int data)
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->data = data;
-    newNode->prev = NULL;
     newNode->next = NULL;
     return newNode;
 };
 
-void forwardTraversal(struct Node *head)
+void print_list(struct Node *last)
 {
-    struct Node *curr = head;
-    while (curr != NULL)
+    if (last == NULL)
+        return;
+    struct Node *head = last->next;
+    while (1)
     {
-        printf("%d ", curr->data);
-        curr = curr->next;
-    }
-    printf("\n");
-}
-
-void backwardTraversal(struct Node *tail)
-{
-    struct Node *curr = tail;
-    while (curr != NULL)
-    {
-        printf("%d ", curr->data);
-        curr = curr->prev;
+        printf("%d ", head->data);
+        head = head->next;
+        if (head == last->next)
+            break;
     }
     printf("\n");
 }
@@ -46,12 +37,9 @@ int main()
     struct Node *third = newNode(3);
 
     head->next = second;
-    second->prev = head;
     second->next = third;
-    third->prev = second;
+    third->next = head;
 
-    forwardTraversal(head);
-    backwardTraversal(third);
-
+    print_list(third);
     return 0;
 }

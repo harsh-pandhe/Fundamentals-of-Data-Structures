@@ -2,20 +2,17 @@ class Node:
     def __init__(self, data) -> None:
         self.data = data
         self.next = None
-        self.prev = None
 
 
-def forwardTraversal(head: Node):
-    while head:
+def print_list(last):
+    if last is None:
+        return
+    head = last.next
+    while True:
         print(head.data, end=" ")
         head = head.next
-    print()
-
-
-def backwardTraversal(tail: Node):
-    while tail:
-        print(tail.data, end=" ")
-        tail = tail.prev
+        if head == last.next:
+            break
     print()
 
 
@@ -25,9 +22,7 @@ if __name__ == "__main__":
     third = Node(3)
 
     head.next = second
-    second.prev = head
     second.next = third
-    third.prev = second
+    third.next = head
 
-    forwardTraversal(head)
-    backwardTraversal(third)
+    print_list(third)

@@ -1,32 +1,28 @@
 class Node {
     int data;
     Node next;
-    Node prev;
 
     Node(int data) {
         this.data = data;
         this.next = null;
-        this.prev = null;
     }
 
 }
 
 public class Practise {
 
-    static void forwardTraversal(Node head) {
-        Node curr = head;
-        while (curr != null) {
-            System.out.print(curr.data + " ");
-            curr = curr.next;
+    static void print_list(Node last) {
+        if (last == null) {
+            return;
         }
-        System.out.println();
-    }
+        Node head = last.next;
+        while (true) {
+            System.out.print(head.data + " ");
+            head = head.next;
+            if (head == last.next) {
+                break;
+            }
 
-    static void backTraversal(Node tail) {
-        Node curr = tail;
-        while (curr != null) {
-            System.out.print(curr.data + " ");
-            curr = curr.prev;
         }
         System.out.println();
     }
@@ -38,10 +34,8 @@ public class Practise {
 
         head.next = second;
         second.next = third;
-        second.prev = head;
-        third.prev = second;
+        third.next = head;
 
-        forwardTraversal(head);
-        backTraversal(third);
+        print_list(third);
     }
 }

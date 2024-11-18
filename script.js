@@ -2,27 +2,24 @@ class Node {
     constructor(data) {
         this.data = data;
         this.next = null;
-        this.prev = null;
     }
 }
 
-function forwardTraversal(head) {
-    let temp = head;
-    while (temp != null) {
-        console.log(temp.data + " ");
-        temp = temp.next;
+function printlist(last) {
+    if (last == null) {
+        return;
     }
-    console.log();
-};
-
-function backTraversal(tail) {
-    let temp = tail;
-    while (temp != null) {
-        console.log(temp.data + " ");
-        temp = temp.prev;
+    let first = last.next;
+    while (true) {
+        console.log(first.data + " ");
+        first = first.next;
+        if (first == last.next) {
+            break;
+        }
     }
-    console.log();
+    console.log("\n");
 }
+
 
 let head = null;
 let second = null;
@@ -34,8 +31,6 @@ third = new Node(3);
 
 head.next = second;
 second.next = third;
-second.prev = head;
-third.prev = second;
+third.next = head;
 
-forwardTraversal(head);
-backTraversal(third);
+printlist(third);
