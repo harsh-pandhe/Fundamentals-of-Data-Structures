@@ -4,12 +4,36 @@ struct Node
 {
     int data;
     Node *next;
+    Node *prev;
     Node(int data)
     {
         this->data = data;
         this->next = nullptr;
+        this->prev = nullptr;
     }
 };
+
+void forwardTraveral(Node *head)
+{
+    Node *curr = head;
+    while (curr != nullptr)
+    {
+        cout << curr->data << " ";
+        curr = curr->next;
+    }
+    cout << endl;
+}
+
+void backTraversal(Node *tail)
+{
+    Node *curr = tail;
+    while (curr != nullptr)
+    {
+        cout << curr->data << " ";
+        curr = curr->prev;
+    }
+    cout << endl;
+}
 
 int main()
 {
@@ -23,6 +47,9 @@ int main()
 
     head->next = second;
     second->next = third;
+    second->prev = head;
+    third->prev = second;
 
-    cout << head->data << " -> " << head->next->data << " -> " << head->next->next->data << endl;
+    forwardTraveral(head);
+    backTraversal(third);
 }

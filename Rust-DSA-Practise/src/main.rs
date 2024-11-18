@@ -1,34 +1,51 @@
+use std::rc::Rc;
+use std::cell::RefCell;
+
+#[derive(Debug)]
 struct Node {
     data: i32,
-    next: Option<Box<Node>>,
+    next: Option<Rc<RefCell<Node>>>,
+    prev: Option<Rc<RefCell<Node>>>,
 }
 
 impl Node {
-    fn new(data: i32) -> Node {
-        Node { data, next: None }
+    fn new(data: i32) -> Rc<RefCell<Node>> {
+        Rc::new(RefCell::new(Node {
+            data,
+            next: None,
+            prev: None,
+        }))
     }
 }
 
-fn print_list(mut node: &Option<Box<Node>>) {
-    while let Some(n) = node {
-        print!("{} ", n.data);
-        node = &n.next;
+fn forward_traversal(head: Option<Rc<RefCell<Node>>>) {
+    let mut temp = head;
+    while let Some(current) = temp {
+        print!("{} ", current.borrow().data);
+        temp = current.borrow().next.clone();
     }
+    println!();
+}
+
+fn back_traversal(tail: Option<Rc<RefCell<Node>>>) {
+    let mut temp = tail;
+    while let Some(current) = temp {
+        print!("{} ", current.borrow().data);
+        temp = current.borrow().prev.clone();
+    }
+    println!();
 }
 
 fn main() {
-    let third = Node {
-        data: 3,
-        next: None,
-    };
-    let second = Node {
-        data: 2,
-        next: Some(Box::new(third)),
-    };
-    let head = Node {
-        data: 1,
-        next: Some(Box::new(second)),
-    };
+    let head = Node::new(1);
+    let second = Node::new(2);
+    let third = Node::new(3);
 
-    print_list(&Some(Box::new(head)));
+    head.borrow_mut().next = Some(second.clone());
+    second.borrow_mut().prev = Some(head.clone());
+    second.borrow_mut().next = Some(third.clone());
+    third.borrow_mut().prev = Some(second.clone());
+
+    forward_traversal(Some(head.clone()));
+    back_traversal(Some(third.clone()));
 }
