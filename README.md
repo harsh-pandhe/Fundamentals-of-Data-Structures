@@ -15,7 +15,6 @@ A comprehensive repository dedicated to implementing fundamental data structures
 - [Getting Started](#getting-started)
 - [How to Run](#how-to-run)
 - [Contributing](#contributing)
-- [Future Plans](#future-plans)
 - [License](#license)
 
 ## 🎯 Overview
@@ -153,37 +152,6 @@ Contributions are welcome! Here's how you can help:
 - Include time and space complexity analysis
 - Test your implementations thoroughly
 - Update this README if adding new data structures
-
-## 🗺️ Future Plans
-
-### Upcoming Data Structures & Algorithms
-
-- [ ] **Linear Data Structures**
-	- [ ] Singly Linked List
-	- [ ] Doubly Linked List
-	- [ ] Stack (Array & Linked List implementation)
-	- [ ] Queue (Array & Linked List implementation)
-	- [ ] Priority Queue
-
-- [ ] **Non-Linear Data Structures**
-	- [ ] Binary Tree
-	- [ ] Binary Search Tree (BST)
-	- [ ] AVL Tree
-	- [ ] Red-Black Tree
-	- [ ] Heap (Min/Max)
-	- [ ] Graph (Adjacency List & Matrix)
-
-- [ ] **Algorithms**
-	- [ ] Sorting Algorithms (Bubble, Selection, Insertion, Merge, Quick, Heap)
-	- [ ] Searching Algorithms (Linear, Binary)
-	- [ ] Graph Algorithms (BFS, DFS, Dijkstra's, Floyd-Warshall)
-	- [ ] Dynamic Programming Examples
-
-- [ ] **Advanced Topics**
-	- [ ] Hash Tables
-	- [ ] Trie
-	- [ ] Segment Tree
-	- [ ] Union-Find (Disjoint Set)
 
 ## 📈 Complexity Analysis
 
